@@ -8,12 +8,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class ServerHanlder  extends SimpleChannelInboundHandler<Message> {
 
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message message) throws Exception {
-        if(message==null){
-            return;
-        }
-        
-    }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
@@ -38,6 +32,15 @@ public class ServerHanlder  extends SimpleChannelInboundHandler<Message> {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         super.channelReadComplete(ctx);
-        ctx.flush();
+        //ctx.flush();
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, Message message) throws Exception {
+        if(message==null){
+            return;
+        }
+
+        System.err.println("4444444444444444444444444444444444444");
     }
 }

@@ -2,6 +2,7 @@ package com.znl.net;
 
 import com.znl.cache.GamePropertiesCache;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -41,10 +42,14 @@ public class NettyServer {
                         }
                     });
             //游戏服端口
-            b.bind(port);
+            ChannelFuture future = b.bind(port).sync();
+            future.channel().closeFuture().sync();
             logger.info("net server start complete on port="+port);
         } catch (Exception e) {
             throw new Exception("start net server err");
+        }finally {
+            workerGroup.shutdownGracefully();
+            bossGroup.shutdownGracefully();
         }
     }
 

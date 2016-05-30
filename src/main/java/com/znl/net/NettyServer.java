@@ -24,11 +24,12 @@ public class NettyServer {
      * @throws Exception
      */
     public static void run() throws Exception{
-        final LogicHandler logicHandler = new LogicHandler();
-        int port = GamePropertiesCache.serverPort;
+        final ServerHanlder logicHandler = new ServerHanlder();
+        //int port = GamePropertiesCache.serverPort;
+        int port = 9909;
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup).option(ChannelOption.TCP_NODELAY, true).option(ChannelOption.SO_KEEPALIVE,
+            b.group(bossGroup, workerGroup).option(ChannelOption.TCP_NODELAY, true).option(ChannelOption.SO_KEEPALIVE,true)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
@@ -36,7 +37,7 @@ public class NettyServer {
                                 throws Exception {
                             //默认发送数据的最大值为：64*1024
                             ch.config().setWriteBufferHighWaterMark(2*1024*1024);
-                            ch.pipeline().addLast(logicHandler,new IODecoder(),new IOEncoder());
+                            ch.pipeline().addLast(logicHandler,new MessageDecoder(),new MessageEncoder());
                         }
                     });
             //游戏服端口
@@ -53,5 +54,14 @@ public class NettyServer {
     public static void shutDown(){
         workerGroup.shutdownGracefully();
         bossGroup.shutdownGracefully();
+    }
+
+
+    public static void main(String[]args){
+        try {
+            run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.znl.net;
 
+import com.znl.protocal.M1;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -39,11 +40,14 @@ public class MessageDecoder  extends LengthFieldBasedFrameDecoder {
             return null;
         }
         int cmd = frame.readInt();// 先读取两个字节命令码
+       // int length= frame.readInt();
         byte[] data = new byte[frame.readableBytes()];// 其它数据为实际数据
         frame.readBytes(data);
         Message msg=new Message();
         msg.setCmd(cmd);
         msg.setData(data);
+        M1.M9999.C2S c2S = M1.M9999.C2S.parseFrom(data);
+        System.err.println(c2S.getAccount());
         return msg;
     }
 }

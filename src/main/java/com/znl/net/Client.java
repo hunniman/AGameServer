@@ -57,7 +57,8 @@ public class Client {
         builder.setAreId(444);
 
         Message msg=new Message();
-        msg.setCmd(9999);
+        short cmd=999;
+        msg.setCmd(cmd);
         msg.setData(builder.build().toByteArray());
         // 发送名字检查
         client.sendMsg(msg);

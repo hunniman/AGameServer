@@ -14,7 +14,7 @@ public class MessageEncoder extends MessageToByteEncoder<Message> {
         int dataLength = message.getData() == null ? 0 : message.getData().length;
         byteBuf.ensureWritable(4 + dataLength);
         byteBuf.writeInt(dataLength);
-        byteBuf.writeInt(message.getCmd());
+        byteBuf.writeShort(message.getCmd());
         if (dataLength > 0) {
             byteBuf.writeBytes(message.getData());
         }

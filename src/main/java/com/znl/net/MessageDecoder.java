@@ -39,8 +39,8 @@ public class MessageDecoder  extends LengthFieldBasedFrameDecoder {
         if (frame == null) {
             return null;
         }
-        int cmd = frame.readInt();// 先读取两个字节命令码
-       // int length= frame.readInt();
+        short cmd = frame.readShort();// 先读取两个字节命令码
+        //int length= frame.readInt();
         byte[] data = new byte[frame.readableBytes()];// 其它数据为实际数据
         frame.readBytes(data);
         Message msg=new Message();

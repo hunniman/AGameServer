@@ -5,15 +5,15 @@ package com.znl.net;
  */
 public class Message {
 
-    private int cmd;
+    private Short cmd;
 
     private byte[]data;// 存放实际数据,用于protobuf解码成对应message
 
-    public int getCmd() {
+    public Short getCmd() {
         return cmd;
     }
 
-    public void setCmd(int cmd) {
+    public void setCmd(Short cmd) {
         this.cmd = cmd;
     }
 
